@@ -21,6 +21,7 @@ class NoteController extends Controller
         if (Auth::user() == null)
             return  redirect('/login');
         $notes = Auth::user()->notes->toArray();
+
         return  view('notes.index', ['data' => $notes]);
     }
 
@@ -53,8 +54,9 @@ class NoteController extends Controller
      */
     public function show($id)
     {
-        $note = Note::find($id)->get();
-        return view('note.show', ['note' => $note]);
+        $note = Note::where('id', $id)->get()->toArray();
+
+        return view('notes.show', ['note' => $note[0]]);
     }
 
     /**
@@ -65,8 +67,8 @@ class NoteController extends Controller
      */
     public function edit($id)
     {
-        $note = Note::find($id)->get();
-        return view('note.edit', ['note' => $note]);
+        $note = Note::where('id', $id)->first()->toArray();
+        return view('notes.edit', ['note' => $note]);
     }
 
     /**
