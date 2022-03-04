@@ -10,26 +10,29 @@
             <a style="width:100%;" href="{{ route('notes.create') }}" class="btn btn-secondary" style="color:cornsilk;"> Generate PDF </a>
         </div>
     </div>
-    <?php $i = 1; ?>
+
     <div class="row ">
-    @foreach ($data as $index => $note)
-        <div class="col-md-4" style="margin-bottom:30px;">
-            <div class="card" id = "{{ $note['id'] }}">
-                <div class="card-header" style="text-align: center;">{{ strlen($note['title']) ? $note['title']:'no title'}}</div>
 
-                <div class="card-body">
+    @foreach ($data as  $note)
+        <div class="col-md-6" style="margin-bottom:30px;">
+            <div class="card" id = "{{ $note->id }}">
+                <div class="card-header" style="text-align: center;">{{ strlen($note->title) ? $note->title:'no title'}}</div>
 
-                        <div class="col-15" style="width:100%; margin-left:32px;">
-                            <a href="{{ route('notes.show', $note['id']) }}" class="btn btn-light" style="background-color: #BBB;border:4px #BBB;"> Show Details</a>
-                            <a href="{{ route('notes.edit', $note['id']) }}" class="btn btn-primary"> Edit </a>
-                            <a onclick="deleteNote({{ $note['id'] }})" class="btn btn-danger"> Delete </a>
-                        </div>
+                <div class="card-body" style="display: flex; justify-content:center;" >
+
+
+                            <a href="{{ route('notes.show', $note->id) }}" class="btn btn-light" style="margin-right:7px;background-color: #BBB;border:4px #BBB;"> Show Details</a>
+                            <a href="{{ route('notes.edit', $note->id) }}" class="btn btn-primary"style="margin-right:7px;" > Edit </a>
+                            <a onclick="deleteNote({{ $note->id }})" class="btn btn-danger"> Delete </a>
 
                 </div>
             </div>
         </div>
-        <?php $i++;?>
+
         @endforeach
+    </div>
+    <div class="d-flex justify-content-center">
+        {!! $data->links() !!}
     </div>
 
 </div>

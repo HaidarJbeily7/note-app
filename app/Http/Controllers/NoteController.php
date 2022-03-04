@@ -17,7 +17,8 @@ class NoteController extends Controller
     {
         if (Auth::user() == null)
             return  redirect('/login');
-        $notes = Auth::user()->notes->toArray();
+        $user_id = Auth::user()->id;
+        $notes = Note::where('user_id', $user_id)->paginate(6);
 
         return  view('notes.index', ['data' => $notes]);
     }
