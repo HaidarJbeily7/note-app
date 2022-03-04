@@ -22,8 +22,8 @@
 
 
                             <a href="{{ route('notes.show', $note->id) }}" class="btn btn-light" style="margin-right:7px;background-color: #BBB;border:4px #BBB;"> Show Details</a>
-                            <a href="{{ route('notes.edit', $note->id) }}" class="btn btn-primary"style="margin-right:7px;" > Edit </a>
-                            <a onclick="deleteNote({{ $note->id }})" class="btn btn-danger"> Delete </a>
+                            <a href="{{ route('notes.edit', $note->id) }}" class="btn btn-primary"style="margin-right:7px;" > Make Edits </a>
+
 
                 </div>
             </div>
@@ -36,30 +36,4 @@
     </div>
 
 </div>
-<script>
-    function deleteNote(note_id)
-    {
-        if (confirm("Are you sure?")) {
-                let _token = $('meta[name="csrf-token"]').attr('content');
-
-        $.ajax({
-            url: "{{route('notes.destroy'," + note_id+")}}",
-            type: "delete",
-            data: {
-                id: note_id,
-                _token: _token
-            },
-            success: function(response) {
-                console.log(response.success);
-                let container = document.getElementById(response.success);
-                container.innerHTML = ``;
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    }
-
-
-</script>
 @endsection
