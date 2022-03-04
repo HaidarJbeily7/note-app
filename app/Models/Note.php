@@ -15,6 +15,7 @@ class Note extends Model
         'title',
         'content',
         'type',
+        'user_id',
         'image'
     ];
 

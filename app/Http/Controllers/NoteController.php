@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateNoteRequest;
-use App\Http\Requests\UpdateNoteRequest;
-use App\Http\Requests\DeleteNoteRequest;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Validator;
 class NoteController extends Controller
 {
     /**
@@ -41,9 +38,24 @@ class NoteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateNoteRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'type' => 'required|string|in:on date,urgent,normal',
+        ]);
+        if($validator->fails())
+        {
+
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        $data = $validator->validated();
+        $data['user_id'] = Auth::user()->id;
+        $note = Note::create($data);
+        return  redirect(route('notes.index'));
     }
 
     /**
@@ -54,9 +66,9 @@ class NoteController extends Controller
      */
     public function show($id)
     {
-        $note = Note::where('id', $id)->get()->toArray();
+        $note = Note::where('id', $id)->first()->toArray();
 
-        return view('notes.show', ['note' => $note[0]]);
+        return view('notes.show', ['note' => $note]);
     }
 
     /**
