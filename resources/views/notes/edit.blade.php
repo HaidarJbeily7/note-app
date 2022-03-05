@@ -8,6 +8,16 @@
             <div class="card">
                 <div class="card-header" style="text-align: center;font-weight:bold;">Edit Note</div>
                 <div class="card-body">
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                     <form action="{{ route('notes.update', $note['id']) }}" method="post">
                         {{ @csrf_field() }}
                         <div class="col-18 mb-3">

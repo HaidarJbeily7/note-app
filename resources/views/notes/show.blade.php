@@ -17,9 +17,16 @@
                             <textarea   rows="4"  class="form-control" id="content"  readonly>{{ trim($note['content']) }}</textarea>
                         </div>
                         </div>
-                    <div class="type">
+                    <div class="type col-18 mb-3">
                         <label for="type" class="form-label">Type</label>
                         <input class="form-control" type="text" name="type" disabled value={{ $note['type'] }}>
+                    </div>
+                    <div class="image col-18 mb-3" >
+                        <label for="image" class="form-label">Attached Image</label>
+                        <div class="col-5 justify-content-center" class="form-label">
+                            {{-- {{ dd($note['image']) }} --}}
+                            <img src="{{ url('/storage/'.$note['image'])  }}"  style="max-width: 100%; height: 100%;" alt="no image attached!">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -32,6 +39,8 @@
         </div>
         <div class="col-md-3">
             <form action="{{ route('notes.destroy',$note['id']) }}" method="post">
+                {{ csrf_field() }}
+                <input type="hidden" name="_method" value="DELETE">
                 <button style="width:100%;"  class="btn btn-danger"> Delete Note </button>
             </form>
 

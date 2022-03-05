@@ -7,7 +7,7 @@
             <a style="width:100%;" href="{{ route('notes.create') }}" class="btn btn-success"> Create Note </a>
         </div>
         <div class="col-md-3">
-            <a style="width:100%;" href="{{ route('notes.create') }}" class="btn btn-secondary" style="color:cornsilk;"> Generate PDF </a>
+            <a style="width:100%;" href="{{ route('stat') }}" class="btn btn-secondary" style="color:cornsilk;"> Go to Report </a>
         </div>
     </div>
 
