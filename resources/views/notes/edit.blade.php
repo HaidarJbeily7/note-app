@@ -18,8 +18,9 @@
                     </div>
                 @endif
 
-                    <form action="{{ route('notes.update', $note['id']) }}" method="post">
+                    <form action="{{ route('notes.update', $note['id']) }}" method="post" enctype="multipart/form-data">
                         {{ @csrf_field() }}
+                        <input type="hidden" name="_method" value="PUT">
                         <div class="col-18 mb-3">
                             <label for="title" class="col-sm-2 col-form-label">Title</label>
                             <div class="col-md-18">

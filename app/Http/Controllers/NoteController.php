@@ -67,7 +67,7 @@ class NoteController extends Controller
         }
 
         $note = Note::create($data);
-        return  redirect(route('notes.index'));
+        return  redirect(route('notes.index'))->with('success', 'Creating Note Completed');
     }
 
     /**
@@ -102,7 +102,7 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateNoteRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
         $validator = Validator::make($request->all(),[
@@ -127,8 +127,9 @@ class NoteController extends Controller
                 $data['image'] = $name;
             }
         }
-        $note = $note->update($data);
-        return  redirect(route('notes.index'));
+
+        $note = Note::where('id', $id)->where('user_id', Auth::user()->id)->update($data);
+        return  redirect(route('notes.index'))->with('success', 'Updating Note Completed');
     }
 
     /**
@@ -140,6 +141,6 @@ class NoteController extends Controller
     public function destroy($id)
     {
         Note::where('id', $id)->first()->delete();
-        return redirect(route('notes.index'));
+        return redirect(route('notes.index'))->with('alert', 'Delete Note Completed');
     }
 }

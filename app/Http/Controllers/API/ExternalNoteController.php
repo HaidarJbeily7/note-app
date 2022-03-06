@@ -51,8 +51,8 @@ class ExternalNoteController extends BaseController
 
     public function update(Request $request, $id)
     {
-        $note = Note::where('user_id', Auth::user()->id)->where('id', $id)->get();
-        if(count($note)==0)
+        $note = Note::where('user_id', Auth::user()->id)->where('id', $id);
+        if($note->count() == 0)
             return $this->handleError([], 'note not found!', 404);
 
         $validator = Validator::make($request->all(),[
@@ -75,8 +75,10 @@ class ExternalNoteController extends BaseController
                 $data['image'] = $name;
             }
         }
-        $note = $note->update($data);
-        return $this->handleResponse(new CustomResource($note), 200);
+
+        $note->update($data);
+
+        return $this->handleResponse(new CustomResource($note->get()), 200);
     }
 
     public function destroy($id)

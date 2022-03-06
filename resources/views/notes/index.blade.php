@@ -2,6 +2,17 @@
 
 @section('content')
 <div class="container">
+    {{-- {{ dd($success) }} --}}
+    @if (session()->has('success'))
+        <div class="alert alert-success" style="text-align: center;">
+                {{ session()->get('success', 'Success!'); }}
+        </div>
+    @endif
+    @if (session()->has('alert'))
+        <div class="alert alert-danger" style="text-align: center;">
+                {{ session()->get('alert', 'Success!'); }}
+        </div>
+    @endif
     <div class="row justify-content-center" style="margin-bottom:30px;">
         <div class="col-md-3">
             <a style="width:100%;" href="{{ route('notes.create') }}" class="btn btn-success"> Create Note </a>

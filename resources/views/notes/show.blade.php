@@ -25,7 +25,7 @@
                         <label for="image" class="form-label">Attached Image</label>
                         <div class="col-18 justify-content-center" class="form-label">
                             {{-- {{ dd($note['image']) }} --}}
-                            <img src="{{ url('/storage/'.$note['image'])  }}" class="img-thumbnail"  alt="no image attached!">
+                            <img src="{{ url('/storage/'.$note['image'])  }}" class="img-thumbnail"  alt="no image attached!" width="250px" height="200px">
                         </div>
                     </div>
                 </div>
