@@ -21,11 +21,11 @@
                         <label for="type" class="form-label">Type</label>
                         <input class="form-control" type="text" name="type" disabled value={{ $note['type'] }}>
                     </div>
-                    <div class="image col-18 mb-3" >
+                    <div class="image col-18 mb-3"  >
                         <label for="image" class="form-label">Attached Image</label>
-                        <div class="col-5 justify-content-center" class="form-label">
+                        <div class="col-18 justify-content-center" class="form-label">
                             {{-- {{ dd($note['image']) }} --}}
-                            <img src="{{ url('/storage/'.$note['image'])  }}"  style="max-width: 100%; height: 100%;" alt="no image attached!">
+                            <img src="{{ url('/storage/'.$note['image'])  }}" class="img-thumbnail"  alt="no image attached!">
                         </div>
                     </div>
                 </div>

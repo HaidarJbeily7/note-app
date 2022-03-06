@@ -54,13 +54,12 @@ class NoteController extends Controller
         }
         $data = $validator->validated();
         $data['user_id'] = Auth::user()->id;
-        // dd($request->hasFile('image'));
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
                 $validated = $request->validate([
                     'image' => 'mimes:jpeg,png|max:2014',
                 ]);
-                // $extension = $validated['image']->extension();
+
                 $name = time().'_'.$validated['image']->getClientOriginalName();
                 $validated['image']->storeAs('/public',$name);
                 $data['image'] = $name;
@@ -105,7 +104,31 @@ class NoteController extends Controller
      */
     public function update(UpdateNoteRequest $request, $id)
     {
-        //
+
+        $validator = Validator::make($request->all(),[
+            'title' => 'string',
+            'content' => 'string',
+            'type' => 'string|in:on date,urgent,normal',
+        ]);
+        if($validator->fails())
+        {
+            return redirect()->back()
+                        ->withErrsors($validator)
+                        ->withInput();
+        }
+        $data = $validator->validated();
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+                $validated = $request->validate([
+                    'image' => 'mimes:jpeg,png|max:2014',
+                ]);
+                $name = time().'_'.$validated['image']->getClientOriginalName();
+                $validated['image']->storeAs('/public',$name);
+                $data['image'] = $name;
+            }
+        }
+        $note = $note->update($data);
+        return  redirect(route('notes.index'));
     }
 
     /**
