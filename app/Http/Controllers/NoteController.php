@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
+use App\Models\SharedLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -146,11 +147,17 @@ class NoteController extends Controller
 
     public function getLink(Request $request)
     {
-        $data = $request->all();
-        $link = route('view-through-link', $data['id']);
+        $note_id = $request->all()['id'];
+        $sl = SharedLink::create(['note_id' => $note_id]);
+        $link = route('view-through-link', $sl->id);
         return response()->json(['success' => $link], 200);
     }
-    public function viewThroughLink(){
+    public function viewThroughLink($id)
+    {
+        $note_id = SharedLink::where('id', $id)->first()->note_id;
 
+        $note = Note::where('id', $note_id)->first()->toArray();
+
+        return view('notes.show', ['note' => $note]);
     }
 }
