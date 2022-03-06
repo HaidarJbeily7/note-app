@@ -3,6 +3,11 @@
 
 @section('content')
 <div class="container">
+    <div class="row justify-content-center" style="margin-bottom: 10px;">
+        <div class="col-md-5 ">
+            <a style="width: 100%;" href="{{ route('notes.index') }}" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
