@@ -39,7 +39,7 @@
     <div class="row justify-content-center" style="margin-top:20px;">
 
         <div class="col-md-3">
-            <a style="width:100%;" href="{{ route('notes.create') }}" class="btn btn-primary" style="color:cornsilk;"> Get Link </a>
+            <button style="width:100%;"  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="color:cornsilk;" onmousedown="getLink({{ $note['id'] }})"> Get Link </button>
         </div>
         <div class="col-md-3">
             <form action="{{ route('notes.destroy',$note['id']) }}" method="post">
@@ -51,5 +51,41 @@
         </div>
     </div>
 </div>
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Public Link</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id = "foo">
+          ...
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
+<script>
+    function getLink(note_id){
+        let _token = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            url: "{{route('get-link')}}",
+            type: "get",
+            data: {
+                id: note_id,
+                _token: _token
+            },
+            success: function(response) {
+                console.log(response.success);
+                let container = document.getElementById('foo');
+                container.innerHTML = response.success;
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+
+    }
+</script>

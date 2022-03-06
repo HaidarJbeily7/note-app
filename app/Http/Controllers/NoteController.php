@@ -143,4 +143,14 @@ class NoteController extends Controller
         Note::where('id', $id)->first()->delete();
         return redirect(route('notes.index'))->with('alert', 'Delete Note Completed');
     }
+
+    public function getLink(Request $request)
+    {
+        $data = $request->all();
+        $link = route('view-through-link', $data['id']);
+        return response()->json(['success' => $link], 200);
+    }
+    public function viewThroughLink(){
+
+    }
 }

@@ -12,6 +12,8 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function (){
         Route::resource('notes', \App\Http\Controllers\NoteController::class);
+        Route::get('link', [\App\Http\Controllers\NoteController::class, 'getLink'])->name('get-link');
+
         Route::get('/statistics', function () {
             $users = User::all();
             $data = [];
@@ -30,5 +32,5 @@ Route::group(['middleware' => ['auth']], function (){
         })->name('stat');
 });
 
-
+Route::get('shared/{id}', [\App\Http\Controllers\NoteController::class, 'viewThroughLink'])->name('view-through-link');
 
